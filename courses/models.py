@@ -9,9 +9,18 @@ class Courses(models.Model):
     Schedule=models.CharField(max_length=150)
     desc = models.TextField(max_length=400)
 
+    def __str__(self):
+        return self.Trainer
+
 
 
 class Clasa(models.Model):
     title = models.CharField(max_length=150)
     desc = models.TextField(max_length= 200, null=True)
     img = models.ImageField(upload_to='cat_images', default='cat_images/default.jpg')
+
+
+
+
+    def __str__(self):
+        return self.title
