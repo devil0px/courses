@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from .models import Courses
+from .models import Course
 from .serializers import coursesSerilizers
 from django_filters.rest_framework import DjangoFilterBackend
-from starterkit.drf.permissions import IsAuthenticatedAndIsActivePermission
+#from starterkit.drf.permissions import IsAuthenticatedAndIsActivePermission
 from django.conf.urls import url, include
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import filters
@@ -14,11 +14,11 @@ from rest_framework.response import Response
 #    CanListCreateCoursePermission,
 #    CanRetrieveUpdateDestroyCoursePermission
 # )
-from tenant_api.serializers.course_serializers import (
-    CourseListCreateSerializer,
-    CourseRetrieveUpdateDestroySerializer
-)
-from tenant_foundation.models import Course
+#from tenant_api.serializers.course_serializers import (
+   # CourseListCreateSerializer,
+    #CourseRetrieveUpdateDestroySerializer
+#)
+#from tenant_foundation.models import Course
 
 
 class CourseCreateAPIView(generics.CreateAPIView):
@@ -54,5 +54,5 @@ class CourseCreateAPIView(generics.CreateAPIView):
 
 
 class coursesView(viewsets.ModelViewSet):
-	queryset = Courses.objects.all()
+	queryset = Course.objects.all()
 	serializer_class = coursesSerilizers
