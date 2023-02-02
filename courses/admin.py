@@ -1,10 +1,42 @@
 from django.contrib import admin
+from .models import Subject, Course, Module, Quiz, Question, Answer, Result
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-from .models import Courses
+@admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    
+    list_display = ['title', 'slug']
+    prepopulated_fields = {'slug': ('title',)}
+    
+class ModuleInline(admin.StackedInline):
+        model = Module
+    
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['title', 'subject', 'created']
+    list_filter = ['created', 'subject']
+    search_fields = ['title', 'overview']
+    prepopulated_fields = {'slug': ('title',)}
+    inlines = [ModuleInline]
+
+class AnswerInline(admin.TabularInline):
+    model = Answer
+    
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+    
+
+class ResultInline(admin.StackedInline):
+    model = Result
+
+admin.site.unregister(User)
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    inlines = [ResultInline]
 
 
-class coursesadmin(admin.ModelAdmin):
-    list_display=['Trainer','Course_Fee','Available_Seats','Schedule','desc']
-
-admin.site.register(Courses,coursesadmin)
+admin.site.register(Quiz)
+admin.site.register(Question,QuestionAdmin)
+admin.site.register(Answer)
